@@ -1,5 +1,5 @@
 # Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Generating yml)
-name: self-learning-tutorial
+name: ai-self-learning-tutorial
 channels:
   - defaults
   - https://repo.anaconda.com/pkgs/main
