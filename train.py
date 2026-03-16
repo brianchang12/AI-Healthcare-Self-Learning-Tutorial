@@ -77,10 +77,12 @@ def tutorial(classifier_id):
     train_results_df = pd.read_csv(train_results_path)
 # End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Read csv to dataframe)
 
+# Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
 # Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Understaning and usage of TfidfVectorizer)
     vectorizer = TfidfVectorizer(stop_words='english', max_features=2000)
     transformed_train_features_df = vectorizer.fit_transform(train_features_df["notes"])
 # End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Understaning and usage of TfidfVectorizer)
+# End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
     
     if Classifier.ada_boost.name == classifier_id: 
         classifier = AdaBoostClassifier(random_state=42)
