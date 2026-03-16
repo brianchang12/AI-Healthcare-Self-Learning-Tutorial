@@ -1,15 +1,22 @@
 # Referenced/Used material from AI healthcare class
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (General help)
+# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (General help, Help with parse_args)
+# Referenced/Used previous work completed by me for AI healthcare class
+# Referenced/Used: https://stackabuse.com/python-for-nlp-sentiment-analysis-with-scikit-learn/
+# Referenced/Used: https://codezup.com/natural-language-processing-sentiment-analysis-scikit-learn/
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+# Referenced/Used: https://www.geeksforgeeks.org/machine-learning/confusion-matrix-machine-learning/
+# Referenced/Used: https://www.geeksforgeeks.org/machine-learning/f1-score-in-machine-learning/
 from pathlib import Path
 import pandas as pd
 import argparse
 from enum import Enum
+import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import AdaBoostClassifier, ExtraTreesClassifier, RandomForestClassifier, BaggingClassifier
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, BaggingClassifier
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 # Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Getting scores from sklearn for training and validation)
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
@@ -17,19 +24,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Enum usage)
 class Classifier(Enum):
     ada_boost = 1
-    extra_trees = 2
-    random_forest = 3
-    bagging = 4
+    random_forest = 2
+    bagging = 3
 
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Setting up parse_args)
+# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Setting up and crafting parse_args)
 def parse_args():
     parser = argparse.ArgumentParser(description="Train a malignant/benign tumor diagnoses classifier using analysis on radiology notes.")
     parser.add_argument(
         "--model",
-        type=str,
         choices=[c.name for c in Classifier],
         default=Classifier.ada_boost,
-        help="Classifier to use"
+        type=str,
+        help="Classifier to use",
     )
     return parser.parse_args()
 
@@ -42,10 +48,28 @@ def classifier_scores(truth, prediction):
 
     return (precision_val, recall_val, accuracy_val, f1_val)
 
-if __name__ == "__main__":
+# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with plotting confusion matrix)
+# Referenced/Used: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html
+# Referenced/Used: https://pythonguides.com/scikit-learn-confusion-matrix/
+# Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix
+# Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.ConfusionMatrixDisplay.html#sklearn.metrics.ConfusionMatrixDisplay
+def graph_confusion_matrix(truth, prediction, classifier_name="test"):
+    results = confusion_matrix(truth, prediction)
+    display = ConfusionMatrixDisplay(results, display_labels=["benign", "malignant"])
+    display.plot()
+    plt.title(f"{classifier_name} classification performance")
+    plt.savefig(f"./{classifier_name}.png")
+# End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix
+# End of: Referenced/Used: https://pythonguides.com/scikit-learn-confusion-matrix/
+# End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.ConfusionMatrixDisplay.html#sklearn.metrics.ConfusionMatrixDisplay
+# End of: Referenced/Used: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html
+# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with plotting confusion matrix)
 
-    args = parse_args()
-
+# Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
+# Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+# Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html#sklearn.ensemble.AdaBoostClassifier
+# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with training and predicting script)
+def tutorial(classifier_id):
     train_features_path = Path("./data/train/features.csv")
     train_results_path = Path("./data/train/results.csv")
 # Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Read csv to dataframe)
@@ -58,15 +82,13 @@ if __name__ == "__main__":
     transformed_train_features_df = vectorizer.fit_transform(train_features_df["notes"])
 # End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Understaning and usage of TfidfVectorizer)
     
-    if Classifier.ada_boost.name == args.model: 
+    if Classifier.ada_boost.name == classifier_id: 
         classifier = AdaBoostClassifier(random_state=42)
-    elif Classifier.extra_trees.name == args.model:
-        classifier = ExtraTreesClassifier(random_state=42)
-    elif Classifier.random_forest.name == args.model:
+    elif Classifier.random_forest.name == classifier_id:
         classifier = RandomForestClassifier(random_state=42)
     else:
         classifier = BaggingClassifier(random_state=42)
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Setting up parse_args)
+# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Setting up and crafting parse_args)
 # End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Enum usage)
     classifier = classifier.fit(transformed_train_features_df, train_results_df["is_malignant_diagnoses"])
 
@@ -107,10 +129,26 @@ Precision: {validation_scores[0]:.5f}, Recall: {validation_scores[1]:.5f}, Accur
     print(validation_output)
     print("===================================================================")
 
+    graph_confusion_matrix(validation_results_df["is_malignant_diagnoses"], validation_prediction, classifier_name)
+# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with training and predicting script)
+# End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+# End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html#sklearn.ensemble.AdaBoostClassifier
+# End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
 
+if __name__ == "__main__":
+
+    args = parse_args()
+
+    tutorial(args.model)
+
+# End of: Referenced/Used: https://codezup.com/natural-language-processing-sentiment-analysis-scikit-learn/
+# End of: Referenced/Used: https://stackabuse.com/python-for-nlp-sentiment-analysis-with-scikit-learn/
+# End of: Referenced/Used: https://www.geeksforgeeks.org/machine-learning/confusion-matrix-machine-learning/
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.ExtraTreesClassifier.html
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (General help)
+# End of: Referenced/Used: https://www.geeksforgeeks.org/machine-learning/f1-score-in-machine-learning/
+# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (General help, Help with parse_args)
 # End of: Referenced/Used material from AI healthcare class
+# End of: Referenced/Used previous work completed by me for AI healthcare class
