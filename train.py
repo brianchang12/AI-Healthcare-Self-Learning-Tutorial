@@ -2,7 +2,7 @@
 This is the training script for the classifiers.
 """
 # Referenced/Used material from AI healthcare class
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (General help, Help with parse_args)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot
 # Referenced/Used previous work completed by me for AI healthcare class
 # Referenced/Used: https://stackabuse.com/python-for-nlp-sentiment-analysis-with-scikit-learn/
 # Referenced/Used: https://codezup.com/natural-language-processing-sentiment-analysis-scikit-learn/
@@ -20,14 +20,14 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier, BaggingClassifier
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Getting scores from sklearn for training and validation)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Getting scores from sklearn for training and validation)
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 
 """
 You can switch between training AdaBoostClassifier, RandomForestClassifier, and BaggingClassifier
 """
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Enum usage)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Enum usage)
 class Classifier(Enum):
     ada_boost = 1
     random_forest = 2
@@ -36,7 +36,7 @@ class Classifier(Enum):
 """
 Argparse for which model you would like to train
 """
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Setting up and crafting parse_args)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Setting up and crafting parse_args)
 def parse_args():
     parser = argparse.ArgumentParser(description="Train a malignant/benign tumor diagnoses classifier using analysis on radiology notes.")
     parser.add_argument(
@@ -61,7 +61,7 @@ def classifier_scores(truth, prediction):
 
     return (precision_val, recall_val, accuracy_val, f1_val)
 
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with plotting confusion matrix)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Help with plotting confusion matrix)
 # Referenced/Used: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html
 # Referenced/Used: https://pythonguides.com/scikit-learn-confusion-matrix/
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html#sklearn.metrics.confusion_matrix
@@ -84,12 +84,12 @@ def graph_confusion_matrix(truth, prediction, classifier_name="test"):
 # End of: Referenced/Used: https://pythonguides.com/scikit-learn-confusion-matrix/
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.ConfusionMatrixDisplay.html#sklearn.metrics.ConfusionMatrixDisplay
 # End of: Referenced/Used: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with plotting confusion matrix)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Help with plotting confusion matrix)
 
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html#sklearn.ensemble.AdaBoostClassifier
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with training and predicting script)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Help with training and predicting script)
 
 
 """
@@ -102,13 +102,13 @@ def tutorial(classifier_id):
     """
     train_features_path = Path("./data/train/features.csv")
     train_results_path = Path("./data/train/results.csv")
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Read csv to dataframe)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Read csv to dataframe)
     train_features_df = pd.read_csv(train_features_path)
     train_results_df = pd.read_csv(train_results_path)
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Read csv to dataframe)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Read csv to dataframe)
 
 # Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Understaning and usage of TfidfVectorizer)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Understanding and usage of TfidfVectorizer)
     
     """
     Apply vectorization on the training data.
@@ -116,7 +116,7 @@ def tutorial(classifier_id):
     """
     vectorizer = TfidfVectorizer(stop_words='english', max_features=2000)
     transformed_train_features_df = vectorizer.fit_transform(train_features_df["notes"])
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Understaning and usage of TfidfVectorizer)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Understanding and usage of TfidfVectorizer)
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
     
     """
@@ -128,8 +128,8 @@ def tutorial(classifier_id):
         classifier = RandomForestClassifier(random_state=42)
     else:
         classifier = BaggingClassifier(random_state=42)
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Setting up and crafting parse_args)
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Enum usage)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Setting up and crafting parse_args)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Enum usage)
 
     """
     Fit the training data to the classifer and then call predict on the training data
@@ -145,10 +145,10 @@ def tutorial(classifier_id):
     validation_features_path = Path("./data/validation/features.csv")
     validation_results_path = Path("./data/validation/results.csv")
 
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Read csv to dataframe)
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Read csv to dataframe)
     validation_features_df = pd.read_csv(validation_features_path)
     validation_results_df = pd.read_csv(validation_results_path)
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Read csv to dataframe)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Read csv to dataframe)
 
     """
     Apply vectorization on the validation data.
@@ -165,9 +165,11 @@ def tutorial(classifier_id):
     """
     train_scores = classifier_scores(train_results_df["is_malignant_diagnoses"], train_prediction)
     validation_scores = classifier_scores(validation_results_df["is_malignant_diagnoses"], validation_prediction)
-
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Getting class name)
     classifier_name = classifier.__class__.__name__
-# Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (truncating decimals)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Getting class name)
+
+# Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (truncating decimals)
 
 
     """
@@ -182,8 +184,8 @@ Precision: {train_scores[0]:.5f}, Recall: {train_scores[1]:.5f}, Accuracy: {trai
 
 Precision: {validation_scores[0]:.5f}, Recall: {validation_scores[1]:.5f}, Accuracy: {validation_scores[2]:.5f}, F1: {validation_scores[3]:.5f}
     """
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (truncating decimals)
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Getting scores from sklearn for training and validation)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (truncating decimals)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Getting scores from sklearn for training and validation)
 
     print("===================================================================")
     print(train_output)
@@ -198,7 +200,7 @@ Precision: {validation_scores[0]:.5f}, Recall: {validation_scores[1]:.5f}, Accur
 
 
 
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (Help with training and predicting script)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot (Help with training and predicting script)
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html#sklearn.ensemble.AdaBoostClassifier
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html
@@ -217,6 +219,6 @@ if __name__ == "__main__":
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html
 # End of: Referenced/Used: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 # End of: Referenced/Used: https://www.geeksforgeeks.org/machine-learning/f1-score-in-machine-learning/
-# End of: Referenced/Used AI generated code and info from GPT-4.1 through Github Copilot (General help, Help with parse_args)
+# End of: Referenced/Used AI generated code and info from OpenAI GPT-4.1 through Github Copilot
 # End of: Referenced/Used material from AI healthcare class
 # End of: Referenced/Used previous work completed by me for AI healthcare class
